@@ -1,1 +1,1 @@
-# spotimote
+# Spotimote
