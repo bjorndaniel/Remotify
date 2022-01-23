@@ -1,4 +1,4 @@
 ﻿{
-	"clientId": "",
-	"spotimoteBackend": ""
+	"clientId": "#{CLIENT_ID}#",
+	"spotimoteBackend": "#{SPOTIMOTE_BACK_END}#"
 }
