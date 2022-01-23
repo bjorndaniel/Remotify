@@ -26,6 +26,17 @@ namespace Spotimote.Functions
                     new AuthorizationCodeTokenRequest(clientId, clientSecret,
                     data.Code, new Uri("http://localhost:5000"))
                 );
+                if (response.IsExpired)
+                {
+                    var refreshResponse = await new OAuthClient().RequestToken(
+                        new AuthorizationCodeRefreshRequest(clientId, clientSecret, data.RefreshToken)
+                    );
+                    return new OkObjectResult(new SpotimoteDTO
+                    {
+                        AccessToken = refreshResponse.AccessToken,
+                        ExpiresIn = refreshResponse.ExpiresIn
+                    });
+                }
                 return new OkObjectResult(new SpotimoteDTO
                 {
                     AccessToken = response.AccessToken,
@@ -41,7 +52,6 @@ namespace Spotimote.Functions
                 return new OkObjectResult(new SpotimoteDTO
                 {
                     AccessToken = response.AccessToken,
-                    RefreshToken = response.RefreshToken,
                     ExpiresIn = response.ExpiresIn
                 });
             }
