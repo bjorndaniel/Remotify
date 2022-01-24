@@ -18,7 +18,7 @@ namespace Spotimote
         private bool _hasCode = false;
         private string _code = string.Empty;
         private SpotifyClient _spotifyClient;
-        private Timer? _timer;
+        private Timer _timer;
         private SpotimoteSettings _settings;
         private HttpClient _httpClient;
 

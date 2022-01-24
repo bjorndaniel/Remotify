@@ -26,7 +26,7 @@
                 <RowDefinition Height="25"/>
                 <RowDefinition Height="35"/>
             </Grid.RowDefinitions>
-            <Image Stretch="UniformToFill" MaxHeight="300" MaxWidth="300" MinHeight="60" MinWidth="60" x:Name="AlbumImage" Grid.Row="0" HorizontalAlignment="Center" />
+            <Image Stretch="UniformToFill" StretchDirection="Both" MaxHeight="300" MaxWidth="300" MinHeight="60" MinWidth="60" x:Name="AlbumImage" Grid.Row="0" HorizontalAlignment="Center" />
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Background="Black" BorderThickness="1" BorderBrush="White"  Height="30" Width="40" x:Name="Previous" Click="Previous_Click" >
                     <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xe76b;"></TextBlock>
