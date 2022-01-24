@@ -13,16 +13,34 @@
              d:DesignHeight="300"
              d:DesignWidth="300"
              Name="Spotimote">
-    <Grid>
-        <StackPanel Orientation="Vertical">
-            <Label x:Name="lblHeadline"
-                   Margin="10"
-                   HorizontalAlignment="Center">Title</Label>
-            <Button Content="Click me!"
-                    Click="button1_Click"
-                    Width="120"
-                    Height="80"
-                    Name="button1" />
-        </StackPanel>
+    <Grid VerticalAlignment="Stretch">
+        <Button Height="60" VerticalAlignment="Center" x:Name="BtnConnect" Click="Button_Click">Connect to spotify</Button>
+        <WebBrowser x:Name="WebBrowser"
+                    Navigating="WebBrowser_Navigating"
+                    VerticalAlignment="Stretch" />
+        <Grid x:Name="NowPlaying" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="35"/>
+            </Grid.RowDefinitions>
+            <Image Stretch="UniformToFill" MaxHeight="300" MaxWidth="300" MinHeight="60" MinWidth="60" x:Name="AlbumImage" Grid.Row="0" HorizontalAlignment="Center" />
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Background="Black" BorderThickness="1" BorderBrush="White"  Height="30" Width="40" x:Name="Previous" Click="Previous_Click" >
+                    <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xe76b;"></TextBlock>
+                </Button>
+                <Button Background="Black" BorderThickness="1"  FontFamily="Segoe Fluent Icons" BorderBrush="White" Foreground="White" Height="30" Width="40" x:Name="Play" Click="Play_Click">
+                    <TextBlock FontFamily="Segoe Fluent Icons" x:Name="PlayButtonText" Text="&#xe768;"></TextBlock>
+                </Button>
+                <Button Background="Black" BorderThickness="1" BorderBrush="White" Height="30" Width="40" x:Name="Next" Click="Next_Click" >
+                    <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xe76c;"></TextBlock>
+                </Button>
+            </StackPanel>
+            <TextBlock x:Name="Track" FontSize="20" Grid.Row="2" HorizontalAlignment="Center" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
+            <TextBlock x:Name="Artist" FontSize="16" Grid.Row="3"  HorizontalAlignment="Center" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />
+            <TextBlock x:Name="Album" FontSize="12" Grid.Row="4"  HorizontalAlignment="Center" TextWrapping="NoWrap"  TextTrimming="CharacterEllipsis"/>
+        </Grid>
     </Grid>
 </UserControl>

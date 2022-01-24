@@ -9,7 +9,7 @@ namespace Spotimote
     {
         public const string Id = "140b409e-01d3-44e3-9ad7-5a56ae74dc25";
         public const string Name = "Spotimote";
-        public const string Description = @"Remotely control Spotify from right inside your favorite IDE!ReA ";
+        public const string Description = @"Remotely control Spotify from right inside VS 2022";
         public const string Language = "en-US";
         public const string Version = "1.0";
         public const string Author = "Daniel Sandberg";

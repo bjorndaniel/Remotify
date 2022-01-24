@@ -18,6 +18,7 @@ namespace Spotimote.Functions
         {
             log.LogInformation("Spotimote token endpoint called");
             var data = await JsonSerializer.DeserializeAsync<SpotimoteDTO>(req.Body);
+            log.LogInformation(JsonSerializer.Serialize(data));
             var clientId = Environment.GetEnvironmentVariable("ClientId", EnvironmentVariableTarget.Process);
             var clientSecret = Environment.GetEnvironmentVariable("ClientSecret", EnvironmentVariableTarget.Process);
             if (data.Type == 0)

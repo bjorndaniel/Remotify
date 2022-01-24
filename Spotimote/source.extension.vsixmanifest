@@ -3,9 +3,9 @@
     <Metadata>
         <Identity Id="140b409e-01d3-44e3-9ad7-5a56ae74dc25" Version="1.0" Language="en-US" Publisher="Daniel Sandberg" />
         <DisplayName>Spotimote</DisplayName>
-        <Description xml:space="preserve">Remotely control Spotify from right inside your favorite IDE!ReA </Description>
-        <Icon>Resources\Icon.png</Icon>
-        <PreviewImage>Resources\Icon.png</PreviewImage>
+        <Description xml:space="preserve">Remotely control Spotify from right inside VS 2022</Description>
+        <Icon>logo.png</Icon>
+        <PreviewImage>Screenshot.png</PreviewImage>
         <Preview>true</Preview>
     </Metadata>
     <Installation>
