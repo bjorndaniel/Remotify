@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.VisualStudio.Threading;
+using Newtonsoft.Json;
 using SpotifyAPI.Web;
-using Spotimote.Model;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -10,31 +10,33 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using VSvsSpotify.Model;
 
-namespace Spotimote
+namespace VSvsSpotify
 {
-    public partial class SpotimoteWindowControl : UserControl
+    public partial class VSvsSpotifyWindowControl : UserControl
     {
         private bool _hasCode = false;
         private string _code = string.Empty;
         private SpotifyClient _spotifyClient;
         private Timer _timer;
-        private SpotimoteSettings _settings;
-        private HttpClient _httpClient;
+        private VSvsSpotifySettings _settings;
+        private readonly HttpClient _httpClient;
 
-        public SpotimoteWindowControl()
+        public VSvsSpotifyWindowControl()
         {
             InitializeComponent();
             _httpClient = new HttpClient();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         protected override async void OnInitialized(EventArgs e)
         {
-            var dir = Path.GetDirectoryName(typeof(SpotimotePackage).Assembly.Location);
+            var dir = Path.GetDirectoryName(typeof(VSvsSpotifyPackage).Assembly.Location);
             var json = Path.Combine(dir, "Resources", "settings.json");
             if (!string.IsNullOrWhiteSpace(json))
             {
-                _settings = JsonConvert.DeserializeObject<SpotimoteSettings>(File.ReadAllText(json));
+                _settings = JsonConvert.DeserializeObject<VSvsSpotifySettings>(File.ReadAllText(json));
                 if (!string.IsNullOrWhiteSpace(_settings?.AccessToken))
                 {
                     BtnConnect.Visibility = Visibility.Collapsed;
@@ -45,6 +47,7 @@ namespace Spotimote
             base.OnInitialized(e);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             BtnConnect.Visibility = Visibility.Collapsed;
@@ -86,7 +89,7 @@ namespace Spotimote
                     Artist.Text = "";
                     Album.Text = "";
                     Track.Text = "No player active";
-                    AlbumImage.Source = new BitmapImage(new Uri("pack://application:,,,/Spotimote;component/Resources/logo.png"));
+                    AlbumImage.Source = new BitmapImage(new Uri("pack://application:,,,/VSvsSpotify;component/Resources/logo.png"));
                 }
                 else if (result?.Item?.Type == ItemType.Track)
                 {
@@ -118,19 +121,19 @@ namespace Spotimote
         {
             if (_settings != null && string.IsNullOrEmpty(_settings?.AccessToken))
             {
-                var dto = new SpotimoteDTO
+                var dto = new VSvsSpotifyDTO
                 {
                     Code = _code,
                     Type = 0,
                 };
                 var content = new StringContent(JsonConvert.SerializeObject(dto), System.Text.Encoding.UTF8, "application/json");
-                var result = await _httpClient.PostAsync($"{_settings!.SpotimoteBackend}", content);
-                var response = JsonConvert.DeserializeObject<SpotimoteDTO>(await result.Content.ReadAsStringAsync());
+                var result = await _httpClient.PostAsync($"{_settings!.VSvsSpotifyBackend}", content);
+                var response = JsonConvert.DeserializeObject<VSvsSpotifyDTO>(await result.Content.ReadAsStringAsync());
 
                 _settings.AccessToken = response?.AccessToken ?? string.Empty;
                 _settings.RefreshToken = response?.RefreshToken ?? string.Empty;
                 _settings.Expires = DateTimeOffset.UtcNow.AddSeconds(response?.ExpiresIn ?? 0);
-                var dir = Path.GetDirectoryName(typeof(SpotimoteWindowControl).Assembly.Location);
+                var dir = Path.GetDirectoryName(typeof(VSvsSpotifyWindowControl).Assembly.Location);
                 var json = Path.Combine(dir, "Resources", "settings.json");
                 File.WriteAllText(json, JsonConvert.SerializeObject(_settings));
             }
@@ -149,41 +152,41 @@ namespace Spotimote
             NowPlaying.Visibility = Visibility.Visible;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         private async void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             if (_spotifyClient != null)
             {
-                await Dispatcher.BeginInvoke(async () =>
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                if (_settings!.Expires.HasValue && Math.Abs(_settings.Expires.Value.UtcDateTime.Subtract(DateTimeOffset.UtcNow.UtcDateTime).TotalSeconds) < 120)
                 {
-                    if (_settings!.Expires.HasValue && Math.Abs(_settings.Expires.Value.UtcDateTime.Subtract(DateTimeOffset.UtcNow.UtcDateTime).TotalSeconds) < 120)
-                    {
-                        await RefreshTokenAsync();
+                    await RefreshTokenAsync();
 
-                    }
-                    await GetCurrentlyPlayingAsync();
-                });
+                }
+                await GetCurrentlyPlayingAsync();
             }
         }
 
         private async Task RefreshTokenAsync()
         {
-            var dto = new SpotimoteDTO
+            var dto = new VSvsSpotifyDTO
             {
                 Type = 1,
                 AccessToken = _settings!.AccessToken,
                 RefreshToken = _settings!.RefreshToken,
             };
             var content = new StringContent(JsonConvert.SerializeObject(dto));
-            var result = await _httpClient.PostAsync($"{_settings!.SpotimoteBackend}", content);
-            var response = JsonConvert.DeserializeObject<SpotimoteDTO>(await result.Content.ReadAsStringAsync());
+            var result = await _httpClient.PostAsync($"{_settings!.VSvsSpotifyBackend}", content);
+            var response = JsonConvert.DeserializeObject<VSvsSpotifyDTO>(await result.Content.ReadAsStringAsync());
             _settings.AccessToken = response?.AccessToken ?? string.Empty;
             _settings.Expires = DateTimeOffset.UtcNow.AddSeconds(response?.ExpiresIn ?? 0);
-            var dir = Path.GetDirectoryName(typeof(SpotimoteWindowControl).Assembly.Location);
+            var dir = Path.GetDirectoryName(typeof(VSvsSpotifyWindowControl).Assembly.Location);
             var json = Path.Combine(dir, "Resources", "settings.json");
             File.WriteAllText(json, JsonConvert.SerializeObject(_settings));
             _spotifyClient = new SpotifyClient(_settings.AccessToken);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         private async void WebBrowser_Navigating(object sender, NavigatingCancelEventArgs e)
         {
 
@@ -197,6 +200,7 @@ namespace Spotimote
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         private async void Previous_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -206,6 +210,7 @@ namespace Spotimote
             catch (Exception) { }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         private async void Play_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -233,6 +238,7 @@ namespace Spotimote
             catch (Exception) { }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         private async void Next_Click(object sender, RoutedEventArgs e)
         {
             try

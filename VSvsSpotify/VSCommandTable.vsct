@@ -6,23 +6,23 @@
   <Include href="KnownImageIds.vsct"/>
   <Include href="VSGlobals.vsct"/>
 
-  <Commands package="Spotimote">
+  <Commands package="VSvsSpotify">
     <!--This section defines the elements the user can interact with, like a menu command or a button or combo box in a toolbar. -->
     <Buttons>
-      <Button guid="Spotimote" id="MyCommand" priority="0x0100" type="Button">
+      <Button guid="VSvsSpotify" id="MyCommand" priority="0x0100" type="Button">
         <Parent guid="VSMainMenu" id="View.DevWindowsGroup.OtherWindows.Group1"/>
         <Icon guid="ImageCatalogGuid" id="Play" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
-          <ButtonText>Spotimote</ButtonText>
-          <LocCanonicalName>.View.SpotimoteWindow</LocCanonicalName>
+          <ButtonText>VSvsSpotify</ButtonText>
+          <LocCanonicalName>.View.VSvsSpotifyWindow</LocCanonicalName>
         </Strings>
       </Button>
     </Buttons>
   </Commands>
 
   <Symbols>
-    <GuidSymbol name="Spotimote" value="{591ada03-2464-412c-a25c-49afd7d565fc}">
+    <GuidSymbol name="VSvsSpotify" value="{591ada03-2464-412c-a25c-49afd7d565fc}">
       <IDSymbol name="MyCommand" value="0x0100" />
     </GuidSymbol>
   </Symbols>

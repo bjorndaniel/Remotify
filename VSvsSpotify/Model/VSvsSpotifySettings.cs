@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace Spotimote.Model
+namespace VSvsSpotify.Model
 {
-    public class SpotimoteSettings
+    public class VSvsSpotifySettings
     {
         [JsonProperty("accessToken")]
         public string AccessToken { get; set; } = string.Empty;
@@ -12,7 +12,7 @@ namespace Spotimote.Model
         public string ClientId { get; set; } = string.Empty;
         [JsonProperty("expires")]
         public DateTimeOffset? Expires { get; set; }
-        [JsonProperty("spotimoteBackend")]
-        public string SpotimoteBackend { get; set; } = string.Empty;
+        [JsonProperty("vSvsSpotifyBackend")]
+        public string VSvsSpotifyBackend { get; set; } = string.Empty;
     }
 }

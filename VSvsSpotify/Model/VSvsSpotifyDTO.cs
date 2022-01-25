@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace Spotimote.Model
+namespace VSvsSpotify.Model
 {
-    public class SpotimoteDTO
+    public class VSvsSpotifyDTO
     {
         [JsonProperty("accessToken")]
         public string AccessToken { get; set; } = string.Empty;

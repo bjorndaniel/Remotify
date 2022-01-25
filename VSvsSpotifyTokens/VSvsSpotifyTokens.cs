@@ -9,15 +9,15 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Spotimote.Functions
+namespace VSvsSpotify.Functions
 {
-    public static class SpotimoteTokens
+    public static class VSvsSpotifyTokens
     {
-        [FunctionName("SpotimoteTokens")]
+        [FunctionName("VSvsSpotifyTokens")]
         public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req, ILogger log)
         {
-            log.LogInformation("Spotimote token endpoint called");
-            var data = await JsonSerializer.DeserializeAsync<SpotimoteDTO>(req.Body);
+            log.LogInformation("VSvsSpotify token endpoint called");
+            var data = await JsonSerializer.DeserializeAsync<VSvsSpotifyDTO>(req.Body);
             log.LogInformation(JsonSerializer.Serialize(data));
             var clientId = Environment.GetEnvironmentVariable("ClientId", EnvironmentVariableTarget.Process);
             var clientSecret = Environment.GetEnvironmentVariable("ClientSecret", EnvironmentVariableTarget.Process);
@@ -32,13 +32,13 @@ namespace Spotimote.Functions
                     var refreshResponse = await new OAuthClient().RequestToken(
                         new AuthorizationCodeRefreshRequest(clientId, clientSecret, data.RefreshToken)
                     );
-                    return new OkObjectResult(new SpotimoteDTO
+                    return new OkObjectResult(new VSvsSpotifyDTO
                     {
                         AccessToken = refreshResponse.AccessToken,
                         ExpiresIn = refreshResponse.ExpiresIn
                     });
                 }
-                return new OkObjectResult(new SpotimoteDTO
+                return new OkObjectResult(new VSvsSpotifyDTO
                 {
                     AccessToken = response.AccessToken,
                     RefreshToken = response.RefreshToken,
@@ -50,7 +50,7 @@ namespace Spotimote.Functions
                 var response = await new OAuthClient().RequestToken(
                     new AuthorizationCodeRefreshRequest(clientId, clientSecret, data.RefreshToken)
                 );
-                return new OkObjectResult(new SpotimoteDTO
+                return new OkObjectResult(new VSvsSpotifyDTO
                 {
                     AccessToken = response.AccessToken,
                     ExpiresIn = response.ExpiresIn
@@ -60,7 +60,7 @@ namespace Spotimote.Functions
         }
     }
 
-    public class SpotimoteDTO
+    public class VSvsSpotifyDTO
     {
         [JsonPropertyName("accessToken")]
         public string AccessToken { get; set; } = string.Empty;

@@ -1,4 +1,4 @@
-﻿using Spotimote;
+﻿using VSvsSpotify;
 using System.Reflection;
 using System.Runtime.InteropServices;
 

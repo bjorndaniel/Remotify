@@ -4,17 +4,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Spotimote
+namespace VSvsSpotify
 {
-    public class SpotimoteWindow : BaseToolWindow<SpotimoteWindow>
+    public class VSvsSpotifyWindow : BaseToolWindow<VSvsSpotifyWindow>
     {
-        public override string GetTitle(int toolWindowId) => "Spotimote";
+        public override string GetTitle(int toolWindowId) => "VSvsSpotifyBackend";
 
         public override Type PaneType => typeof(Pane);
 
         public override Task<FrameworkElement> CreateAsync(int toolWindowId, CancellationToken cancellationToken)
         {
-            return Task.FromResult<FrameworkElement>(new SpotimoteWindowControl());
+            return Task.FromResult<FrameworkElement>(new VSvsSpotifyWindowControl());
         }
 
         [Guid("7051fb93-60b5-48e8-b3b7-1aa0be2bd23c")]

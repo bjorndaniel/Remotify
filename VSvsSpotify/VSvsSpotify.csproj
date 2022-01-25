@@ -13,8 +13,8 @@
     <ProjectGuid>{4353B47E-B1E7-4E2E-9F8C-17C5890A7D94}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Spotimote</RootNamespace>
-    <AssemblyName>Spotimote</AssemblyName>
+    <RootNamespace>VSvsSpotify</RootNamespace>
+    <AssemblyName>VSvsSpotify</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
     <UseCodebase>true</UseCodebase>
@@ -45,11 +45,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Model\SpotimoteSettings.cs" />
-    <Compile Include="Model\SpotimoteDTO.cs" />
+    <Compile Include="Model\VSvsSpotifySettings.cs" />
+    <Compile Include="Model\VSvsSpotifyDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\SpotimoteWindowCommand.cs" />
-    <Compile Include="SpotimotePackage.cs" />
+    <Compile Include="VSvsSpotifyPackage.cs" />
     <Compile Include="source.extension.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -91,13 +91,13 @@
     </VSCTCompile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ToolWindows\SpotimoteWindow.cs" />
-    <Page Include="ToolWindows\SpotimoteWindowControl.xaml">
+    <Compile Include="ToolWindows\VSvsSpotifyWindow.cs" />
+    <Page Include="ToolWindows\VSvsSpotifyWindowControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Compile Include="ToolWindows\SpotimoteWindowControl.xaml.cs">
-      <DependentUpon>SpotimoteWindowControl.xaml</DependentUpon>
+    <Compile Include="ToolWindows\VSvsSpotifyWindowControl.xaml.cs">
+      <DependentUpon>VSvsSpotifyWindowControl.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

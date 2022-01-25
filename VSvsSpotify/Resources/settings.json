@@ -1,0 +1,4 @@
+﻿{
+	"clientId": "#{CLIENT_ID}#",
+	"vSvsSpotifyBackend": "#{VSVSSPOTIFY_BACK_END}#"
+}
