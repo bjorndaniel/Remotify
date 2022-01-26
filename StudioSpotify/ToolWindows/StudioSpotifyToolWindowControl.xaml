@@ -14,11 +14,11 @@
              d:DesignWidth="300"
              Name="MyToolWindow">
     <Grid>
-        <StackPanel x:Name="PanelError" Visibility="Collapsed" VerticalAlignment="Center">
+        <StackPanel x:Name="PanelError" Visibility="Collapsed" VerticalAlignment="Center" Margin="10">
             <Button Height="60"  VerticalAlignment="Center" x:Name="BtnConnect" Click="Button_Click">Try connect to spotify</Button>
             <TextBlock x:Name="ErrorText" Text="Something went wrong. Click the button to try and reconnect"></TextBlock>
         </StackPanel>
-        
+
         <WebBrowser x:Name="WebBrowser"
                     Navigating="WebBrowser_Navigating"
                     VerticalAlignment="Stretch" />

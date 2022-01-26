@@ -11,6 +11,6 @@ Permissions are needed to control playback and read currently playing music.
 
 ## Release Notes
 
-### 1.0
+### 0.5
 
 Initial release
