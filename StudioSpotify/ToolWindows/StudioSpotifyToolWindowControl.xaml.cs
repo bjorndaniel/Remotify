@@ -31,7 +31,6 @@ namespace StudioSpotify
         {
             InitializeComponent();
             _httpClient = new HttpClient();
-            
         }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         protected override async void OnInitialized(EventArgs e)
@@ -179,7 +178,7 @@ namespace StudioSpotify
                 WebBrowser.Visibility = Visibility.Collapsed;
                 NowPlaying.Visibility = Visibility.Visible;
             }
-            catch (Exception e )  
+            catch (Exception e)
             {
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                 
@@ -234,7 +233,7 @@ namespace StudioSpotify
                 File.WriteAllText(json, JsonConvert.SerializeObject(_settings));
                 _spotifyClient = new SpotifyClient(_settings.AccessToken);
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                 if (_outputWindow == null)

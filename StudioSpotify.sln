@@ -7,6 +7,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudioSpotify", "StudioSpot
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudioSpotify.Backend", "StudioSpotify.Backend\StudioSpotify.Backend.csproj", "{D8A8BD74-D7B3-4E82-818F-EC0DFC3B46E6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildAndDeploy", "BuildAndDeploy", "{7F4E6FE8-8709-402A-BA82-65ABFF91483A}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		README.md = README.md
+		.github\workflows\StudioSpotify.yml = .github\workflows\StudioSpotify.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
