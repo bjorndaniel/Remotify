@@ -5,7 +5,7 @@
         <DisplayName>Studio Spotify</DisplayName>
         <Description xml:space="preserve">Lets you control Spotify from right inside Visual Studio</Description>
         <Icon>Resources\Icon.png</Icon>
-        <PreviewImage>Resources\Icon.png</PreviewImage>
+        <PreviewImage>Screenshot.png</PreviewImage>
         <Preview>true</Preview>
     </Metadata>
     <Installation>
