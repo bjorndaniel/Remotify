@@ -1,4 +1,4 @@
 ﻿{
 	"clientId": "b667788b17a74aad949a13c397f9264c",
-	"studioSpotifyBackend": "http://localhost:7071/api/studiospotifytokens"
+	"studioSpotifyBackend": "https://studiospotify.azurewebsites.net/api/StudioSpotifyTokens?code=0ZHtZZWD1EBpuw/zHS4WlxaO8HHynOZr7UekX7Iv037DBKHsStFouA=="
 }

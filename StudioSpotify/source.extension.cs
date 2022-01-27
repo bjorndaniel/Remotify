@@ -11,7 +11,7 @@ namespace StudioSpotify
         public const string Name = "Studio Spotify";
         public const string Description = @"Lets you control Spotify from right inside Visual Studio";
         public const string Language = "en-US";
-        public const string Version = "1.0";
+        public const string Version = "0.6";
         public const string Author = "BDSoftware";
         public const string Tags = "";
     }
