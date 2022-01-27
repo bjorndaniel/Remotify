@@ -25,4 +25,5 @@ Embedded font that was missing on Windows 10
 
 ### 0.8
 Tweaks to Spotify polling interval
-Added the option to clear Spotify account permissions under Tools -> Options
+
+Added the option to clear Spotify account permissions under Tools -> Spotify Studio

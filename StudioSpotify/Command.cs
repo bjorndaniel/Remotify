@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using StudioSpotify.Model;
 using System.ComponentModel.Design;
-using System.Globalization;
 using System.IO;
 
 namespace StudioSpotify
