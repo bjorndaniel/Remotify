@@ -24,6 +24,8 @@ namespace StudioSpotify
         private StudioSpotifySettings _settings;
         private readonly HttpClient _httpClient;
         private string _placeHolder;
+        private Guid _paneGuid = Guid.NewGuid();
+        private IVsOutputWindow _outputWindow;
 
         public StudioSpotifyToolWindowControl()
         {
@@ -33,6 +35,7 @@ namespace StudioSpotify
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         protected override async void OnInitialized(EventArgs e)
         {
+            General.Saved += General_Saved;
             var dir = Path.GetDirectoryName(typeof(StudioSpotifyPackage).Assembly.Location);
             var json = Path.Combine(dir, "Resources", "settings.json");
             if (!string.IsNullOrWhiteSpace(json))
@@ -40,10 +43,9 @@ namespace StudioSpotify
                 _settings = JsonConvert.DeserializeObject<StudioSpotifySettings>(File.ReadAllText(json));
                 if (!string.IsNullOrWhiteSpace(_settings?.AccessToken))
                 {
-                    BtnConnect.Visibility = Visibility.Collapsed;
+                    PanelError.Visibility = Visibility.Collapsed;
                 }
                 await ActivateSpotifyAsync();
-
             }
             dir = Path.GetDirectoryName(typeof(StudioSpotifyPackage).Assembly.Location);
             _placeHolder = Path.Combine(dir, "Resources", "logo.png");
@@ -52,8 +54,26 @@ namespace StudioSpotify
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
+        private async void General_Saved(General obj)
+        {
+            var general = await General.GetLiveInstanceAsync();
+            if (general.HasRevokedAccess)
+            {
+                
+                PanelError.Visibility = Visibility.Visible;
+                WebBrowser.Visibility = Visibility.Collapsed;
+                NowPlaying.Visibility = Visibility.Collapsed;
+                _timer?.Stop();
+                _hasCode = false;
+            }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
+            var general = await General.GetLiveInstanceAsync();
+            general.HasRevokedAccess = false;
+            await general.SaveAsync();
             PanelError.Visibility = Visibility.Collapsed;
             WebBrowser.Visibility = Visibility.Visible;
             await ActivateSpotifyAsync();
@@ -113,12 +133,29 @@ namespace StudioSpotify
                     AlbumImage.Source = new BitmapImage(new Uri(episode?.Show?.Images?.FirstOrDefault()?.Url ?? ""));
                 }
             }
+            catch (APIException e)
+            {
+                _timer.Stop();
+                Track.Text = "In preview mode and invite only.";
+                Artist.Text = e.Response?.Body?.ToString() ?? "";
+                Album.Text = "The extension is awaiting Spotify approval.";
+            }
             catch (Exception e)
             {
                 if (e.Message.Contains("expired"))
                 {
                     await RefreshTokenAsync();
                 }
+
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                if (_outputWindow == null)
+                {
+                    _outputWindow = (IVsOutputWindow)Package.GetGlobalService(typeof(SVsOutputWindow));
+                    _outputWindow.CreatePane(ref _paneGuid, "Studio Spotify", 1, 1);
+                }
+                _outputWindow.GetPane(ref _paneGuid, out var outputPane);
+                outputPane.Activate();
+                outputPane.OutputString(e.ToString());
             }
         }
 
@@ -136,7 +173,6 @@ namespace StudioSpotify
                     var content = new StringContent(JsonConvert.SerializeObject(dto), System.Text.Encoding.UTF8, "application/json");
                     var result = await _httpClient.PostAsync($"{_settings!.StudioSpotifyBackend}", content);
                     var response = JsonConvert.DeserializeObject<StudioSpotifyDTO>(await result.Content.ReadAsStringAsync());
-
                     _settings.AccessToken = response?.AccessToken ?? string.Empty;
                     _settings.RefreshToken = response?.RefreshToken ?? string.Empty;
                     _settings.Expires = DateTimeOffset.UtcNow.AddSeconds(response?.ExpiresIn ?? 0);
@@ -151,7 +187,7 @@ namespace StudioSpotify
                 if (_spotifyClient == null)
                 {
                     _spotifyClient = new SpotifyClient(_settings!.AccessToken);
-                    _timer = new Timer(TimeSpan.FromSeconds(1).TotalMilliseconds);
+                    _timer = new Timer(TimeSpan.FromMilliseconds(2500).TotalMilliseconds);
                     _timer.Elapsed += Timer_Elapsed;
                     _timer.Start();
                 }
@@ -161,12 +197,14 @@ namespace StudioSpotify
             }
             catch (Exception e)
             {
-                var paneGuid = Guid.NewGuid();
-
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                var outputWindow = (IVsOutputWindow)Package.GetGlobalService(typeof(SVsOutputWindow));
-                outputWindow.CreatePane(ref paneGuid, "Studio Spotify", 1, 1);
-                outputWindow.GetPane(ref paneGuid, out var outputPane);
+
+                if (_outputWindow == null)
+                {
+                    _outputWindow = (IVsOutputWindow)Package.GetGlobalService(typeof(SVsOutputWindow));
+                    _outputWindow.CreatePane(ref _paneGuid, "Studio Spotify", 1, 1);
+                }
+                _outputWindow.GetPane(ref _paneGuid, out var outputPane);
                 outputPane.Activate();
                 outputPane.OutputString(e.ToString());
                 WebBrowser.Visibility = Visibility.Collapsed;
@@ -180,12 +218,15 @@ namespace StudioSpotify
             if (_spotifyClient != null)
             {
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+
                 if (_settings!.Expires.HasValue && Math.Abs(_settings.Expires.Value.UtcDateTime.Subtract(DateTimeOffset.UtcNow.UtcDateTime).TotalSeconds) < 120)
                 {
                     await RefreshTokenAsync();
-
                 }
-                await GetCurrentlyPlayingAsync();
+                else
+                {
+                    await GetCurrentlyPlayingAsync();
+                }
             }
         }
 
@@ -211,11 +252,13 @@ namespace StudioSpotify
             }
             catch (Exception e)
             {
-                var paneGuid = Guid.NewGuid();
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                var outputWindow = (IVsOutputWindow)Package.GetGlobalService(typeof(SVsOutputWindow));
-                outputWindow.CreatePane(ref paneGuid, "Studio Spotify", 1, 1);
-                outputWindow.GetPane(ref paneGuid, out var outputPane);
+                if (_outputWindow == null)
+                {
+                    _outputWindow = (IVsOutputWindow)Package.GetGlobalService(typeof(SVsOutputWindow));
+                    _outputWindow.CreatePane(ref _paneGuid, "Studio Spotify", 1, 1);
+                }
+                _outputWindow.GetPane(ref _paneGuid, out var outputPane);
                 outputPane.Activate();
                 outputPane.OutputString(e.ToString());
                 WebBrowser.Visibility = Visibility.Collapsed;

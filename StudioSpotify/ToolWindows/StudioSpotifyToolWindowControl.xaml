@@ -13,16 +13,22 @@
              d:DesignHeight="300"
              d:DesignWidth="300"
              Name="MyToolWindow">
+    <UserControl.Resources>
+        <Style x:Key="Fluent">
+            <Setter Property="TextBlock.FontFamily" Value="pack://application:,,,/StudioSpotify;component/Resources/SegoeFluentIcons.ttf#Segoe Fluent Icons" />
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <StackPanel x:Name="PanelError" Visibility="Collapsed" VerticalAlignment="Center" Margin="10">
             <Button Height="60"  VerticalAlignment="Center" x:Name="BtnConnect" Click="Button_Click">Try connect to spotify</Button>
-            <TextBlock x:Name="ErrorText" Text="Something went wrong. Click the button to try and reconnect"></TextBlock>
+            <TextBlock HorizontalAlignment="Center" x:Name="ErrorText" Text="Click the button to connect to Spotify"></TextBlock>
         </StackPanel>
 
         <WebBrowser x:Name="WebBrowser"
+                    Visibility="Collapsed"
                     Navigating="WebBrowser_Navigating"
                     VerticalAlignment="Stretch" />
-        <Grid x:Name="NowPlaying" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5">
+        <Grid x:Name="NowPlaying" Visibility="Visible" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="60"/>
@@ -36,13 +42,13 @@
             <Image Stretch="Uniform" x:Name="AlbumImage" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinHeight="60" MinWidth="60" />
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Background="Black" BorderThickness="1" BorderBrush="White"  Height="30" Width="40" x:Name="Previous" Click="Previous_Click" >
-                    <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xe76b;"></TextBlock>
+                    <TextBlock Style="{StaticResource Fluent}" Text="&#xe76b;"></TextBlock>
                 </Button>
                 <Button Background="Black" BorderThickness="1"  FontFamily="Segoe Fluent Icons" BorderBrush="White" Foreground="White" Height="30" Width="40" x:Name="Play" Click="Play_Click">
-                    <TextBlock FontFamily="Segoe Fluent Icons" x:Name="PlayButtonText" Text="&#xe768;"></TextBlock>
+                    <TextBlock Style="{StaticResource Fluent}" x:Name="PlayButtonText" Text="&#xe768;"></TextBlock>
                 </Button>
                 <Button Background="Black" BorderThickness="1" BorderBrush="White" Height="30" Width="40" x:Name="Next" Click="Next_Click" >
-                    <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xe76c;"></TextBlock>
+                    <TextBlock Style="{StaticResource Fluent}" Text="&#xe76c;"></TextBlock>
                 </Button>
             </StackPanel>
             <TextBlock x:Name="Track" FontSize="20" Grid.Row="2" HorizontalAlignment="Center" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" />

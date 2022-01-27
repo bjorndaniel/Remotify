@@ -14,3 +14,15 @@ Permissions are needed to control playback and read currently playing music.
 ### 0.5
 
 Initial release
+
+### 0.6
+Added error handling for Spotify
+
+It is still in review so for now it is invite only.
+
+### 0.7
+Embedded font that was missing on Windows 10
+
+### 0.8
+Tweaks to Spotify polling interval
+Added the option to clear Spotify account permissions under Tools -> Options

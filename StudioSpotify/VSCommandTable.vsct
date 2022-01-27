@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-  <Extern href="stdidcmd.h"/>
-  <Extern href="vsshlids.h"/>
-  <Include href="KnownImageIds.vsct"/>
-  <Include href="VSGlobals.vsct"/>
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
+  <Include href="KnownImageIds.vsct" />
+  <Include href="VSGlobals.vsct" />
 
   <Commands package="StudioSpotify">
     <!--This section defines the elements the user can interact with, like a menu command or a button or combo box in a toolbar. -->
     <Buttons>
       <Button guid="StudioSpotify" id="StudioSpotifyCommand" priority="0x0100" type="Button">
-        <Parent guid="VSMainMenu" id="View.DevWindowsGroup.OtherWindows.Group1"/>
+        <Parent guid="VSMainMenu" id="View.DevWindowsGroup.OtherWindows.Group1" />
         <Icon guid="ImageCatalogGuid" id="Play" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
@@ -18,12 +18,41 @@
           <LocCanonicalName>.View.StudioSpotifyToolWindow</LocCanonicalName>
         </Strings>
       </Button>
+      <Button guid="guidStudioSpotifyPackageCmdSet" id="cmdidCommand" priority="0x0100" type="Button">
+        <Parent guid="guidStudioSpotifyPackageCmdSet" id="MyMenuGroup" />
+        <Icon guid="ImageCatalogGuid" id="Play" />
+        <Strings>
+          <ButtonText>Studio Spotify - Revoke Spotify access</ButtonText>
+        </Strings>
+      </Button>
     </Buttons>
+    <Groups>
+      <Group guid="guidStudioSpotifyPackageCmdSet" id="MyMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
+      </Group>
+    </Groups>
+    <Bitmaps>
+      <Bitmap guid="guidImages" href="Resources\Command.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
+    </Bitmaps>
   </Commands>
 
   <Symbols>
     <GuidSymbol name="StudioSpotify" value="{51443615-a922-4a5c-8f37-7e9bb4ab44ca}">
       <IDSymbol name="StudioSpotifyCommand" value="0x0100" />
+    </GuidSymbol>
+  
+    <GuidSymbol value="{70feb9ed-ff71-4c44-9567-6523b93dccc3}" name="guidStudioSpotifyPackageCmdSet">
+      <IDSymbol value="4128" name="MyMenuGroup" />
+      <IDSymbol value="256" name="cmdidCommand" />
+    </GuidSymbol>
+  
+    <GuidSymbol value="{3be6a221-51ca-46a5-b524-b9707950b5c1}" name="guidImages">
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
     </GuidSymbol>
   </Symbols>
 </CommandTable>
