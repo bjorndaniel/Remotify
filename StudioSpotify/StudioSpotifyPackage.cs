@@ -22,6 +22,7 @@ namespace StudioSpotify
             await this.RegisterCommandsAsync();
 
             this.RegisterToolWindows();
+            await Command.InitializeAsync(this);
         }
     }
 }

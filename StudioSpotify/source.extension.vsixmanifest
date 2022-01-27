@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="d83e0b89-3864-4036-98f5-8dc5cdb58c59" Version="0.6" Language="en-US" Publisher="BDSoftware" />
+        <Identity Id="d83e0b89-3864-4036-98f5-8dc5cdb58c59" Version="0.7" Language="en-US" Publisher="BDSoftware" />
         <DisplayName>Studio Spotify</DisplayName>
         <Description xml:space="preserve">Lets you control Spotify from right inside Visual Studio</Description>
         <Icon>Resources\Icon.png</Icon>
         <PreviewImage>Resources\Icon.png</PreviewImage>
-        <Preview>true</Preview>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
