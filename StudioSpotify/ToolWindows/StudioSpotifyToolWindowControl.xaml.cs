@@ -187,10 +187,10 @@ namespace StudioSpotify
                 if (_spotifyClient == null)
                 {
                     _spotifyClient = new SpotifyClient(_settings!.AccessToken);
-                    _timer = new Timer(TimeSpan.FromMilliseconds(2500).TotalMilliseconds);
-                    _timer.Elapsed += Timer_Elapsed;
-                    _timer.Start();
                 }
+                _timer = new Timer(TimeSpan.FromMilliseconds(2500).TotalMilliseconds);
+                _timer.Elapsed += Timer_Elapsed;
+                _timer.Start();
                 PanelError.Visibility = Visibility.Collapsed;
                 WebBrowser.Visibility = Visibility.Collapsed;
                 NowPlaying.Visibility = Visibility.Visible;
@@ -249,6 +249,9 @@ namespace StudioSpotify
                 var json = Path.Combine(dir, "Resources", "settings.json");
                 File.WriteAllText(json, JsonConvert.SerializeObject(_settings));
                 _spotifyClient = new SpotifyClient(_settings.AccessToken);
+                _timer = new Timer(TimeSpan.FromMilliseconds(2500).TotalMilliseconds);
+                _timer.Elapsed += Timer_Elapsed;
+                _timer.Start();
             }
             catch (Exception e)
             {
