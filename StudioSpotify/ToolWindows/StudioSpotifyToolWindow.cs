@@ -4,11 +4,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace StudioSpotify
+namespace Remotify
 {
     public class StudioSpotifyToolWindow : BaseToolWindow<StudioSpotifyToolWindow>
     {
-        public override string GetTitle(int toolWindowId) => "Studio Spotify";
+        public override string GetTitle(int toolWindowId) => "Remotify";
 
         public override Type PaneType => typeof(Pane);
 

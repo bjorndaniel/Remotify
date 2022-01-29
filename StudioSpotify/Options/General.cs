@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace StudioSpotify
+namespace Remotify
 {
     internal partial class OptionsProvider
     {
@@ -12,7 +12,7 @@ namespace StudioSpotify
 
     public class General : BaseOptionModel<General>
     {
-        [Category("Studio Spotify")]
+        [Category("Remotify")]
         [DisplayName("HasRevoked")]
         [Description("Bool if user has revoked access")]
         [DefaultValue(false)]

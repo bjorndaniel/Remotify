@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.Shell.Interop;
 using Newtonsoft.Json;
+using Remotify.Model;
 using SpotifyAPI.Web;
-using StudioSpotify.Model;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -12,7 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 
-namespace StudioSpotify
+namespace Remotify
 {
     public partial class StudioSpotifyToolWindowControl : UserControl
     {
@@ -26,6 +26,7 @@ namespace StudioSpotify
         private string _placeHolder;
         private Guid _paneGuid = Guid.NewGuid();
         private IVsOutputWindow _outputWindow;
+        private string _currentTrackUrl = string.Empty;
 
         public StudioSpotifyToolWindowControl()
         {
@@ -50,6 +51,8 @@ namespace StudioSpotify
             dir = Path.GetDirectoryName(typeof(StudioSpotifyPackage).Assembly.Location);
             _placeHolder = Path.Combine(dir, "Resources", "logo.png");
             AlbumImage.Source = new BitmapImage(new Uri(_placeHolder));
+            var spotifyLogo = Path.Combine(dir, "Resources", "SpotifyLogo.png");
+            SpotifyLogo.Source = new BitmapImage(new Uri(spotifyLogo));
             base.OnInitialized(e);
         }
 
@@ -86,14 +89,11 @@ namespace StudioSpotify
                 var loginRequest = new LoginRequest(new Uri("http://localhost:5000"), _settings?.ClientId ?? "", LoginRequest.ResponseType.Code)
                 {
                     Scope = new[] { Scopes.PlaylistReadPrivate,
-                 Scopes.PlaylistReadCollaborative,
-                 Scopes.UserReadPrivate,
-                 Scopes.UserReadEmail,
                  Scopes.Streaming,
                  Scopes.UserModifyPlaybackState,
                  Scopes.AppRemoteControl,
-                 Scopes.PlaylistModifyPublic,
                  Scopes.UserReadPlaybackState,
+                 Scopes.UserReadCurrentlyPlaying,
                  Scopes.UserReadPlaybackPosition }
                 };
                 WebBrowser.Navigate(loginRequest.ToUri());
@@ -111,9 +111,10 @@ namespace StudioSpotify
                 var result = await _spotifyClient!.Player!.GetCurrentlyPlaying(new PlayerCurrentlyPlayingRequest());
                 if (result == null)
                 {
-                    Artist.Text = "";
-                    Album.Text = "";
+                    Artist.Text = string.Empty;
+                    Album.Text = string.Empty;
                     Track.Text = "No player active";
+                    _currentTrackUrl = string.Empty;
                     AlbumImage.Source = new BitmapImage(new Uri(_placeHolder));
                 }
                 else if (result?.Item?.Type == ItemType.Track)
@@ -122,6 +123,7 @@ namespace StudioSpotify
                     Artist.Text = track!.Artists.ToList().Count() > 1 ? track.Artists.Select(_ => _.Name).Aggregate((a, b) => $"{a}, {b}") : track.Artists[0].Name;
                     Track.Text = track.Name;
                     Album.Text = track.Album.Name;
+                    _currentTrackUrl = $"https://open.spotify.com/track/{track.Id}";
                     AlbumImage.Source = new BitmapImage(new Uri(track.Album.Images.FirstOrDefault()?.Url ?? ""));
                 }
                 else if (result?.Item?.Type == ItemType.Episode)
@@ -130,6 +132,7 @@ namespace StudioSpotify
                     Artist.Text = episode?.Show?.Name;
                     Track.Text = episode?.Name;
                     Album.Text = episode?.Show?.Description;
+                    _currentTrackUrl = $"https://open.spotify.com/episode/{episode.Id}";
                     AlbumImage.Source = new BitmapImage(new Uri(episode?.Show?.Images?.FirstOrDefault()?.Url ?? ""));
                 }
             }
@@ -137,8 +140,16 @@ namespace StudioSpotify
             {
                 _timer.Stop();
                 Track.Text = "In preview mode and invite only.";
-                Artist.Text = e.Response?.Body?.ToString() ?? "";
                 Album.Text = "The extension is awaiting Spotify approval.";
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                if (_outputWindow == null)
+                {
+                    _outputWindow = (IVsOutputWindow)Package.GetGlobalService(typeof(SVsOutputWindow));
+                    _outputWindow.CreatePane(ref _paneGuid, "Remotify", 1, 1);
+                }
+                _outputWindow.GetPane(ref _paneGuid, out var outputPane);
+                outputPane.Activate();
+                outputPane.OutputString(e.ToString());
             }
             catch (Exception e)
             {
@@ -151,7 +162,7 @@ namespace StudioSpotify
                 if (_outputWindow == null)
                 {
                     _outputWindow = (IVsOutputWindow)Package.GetGlobalService(typeof(SVsOutputWindow));
-                    _outputWindow.CreatePane(ref _paneGuid, "Studio Spotify", 1, 1);
+                    _outputWindow.CreatePane(ref _paneGuid, "Remotify", 1, 1);
                 }
                 _outputWindow.GetPane(ref _paneGuid, out var outputPane);
                 outputPane.Activate();
@@ -202,7 +213,7 @@ namespace StudioSpotify
                 if (_outputWindow == null)
                 {
                     _outputWindow = (IVsOutputWindow)Package.GetGlobalService(typeof(SVsOutputWindow));
-                    _outputWindow.CreatePane(ref _paneGuid, "Studio Spotify", 1, 1);
+                    _outputWindow.CreatePane(ref _paneGuid, "Remotify", 1, 1);
                 }
                 _outputWindow.GetPane(ref _paneGuid, out var outputPane);
                 outputPane.Activate();
@@ -256,7 +267,7 @@ namespace StudioSpotify
                 if (_outputWindow == null)
                 {
                     _outputWindow = (IVsOutputWindow)Package.GetGlobalService(typeof(SVsOutputWindow));
-                    _outputWindow.CreatePane(ref _paneGuid, "Studio Spotify", 1, 1);
+                    _outputWindow.CreatePane(ref _paneGuid, "Remotify", 1, 1);
                 }
                 _outputWindow.GetPane(ref _paneGuid, out var outputPane);
                 outputPane.Activate();
@@ -352,6 +363,20 @@ namespace StudioSpotify
             if (!success)
             {
                 _ = "";
+            }
+        }
+
+        private void AlbumImage_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(_currentTrackUrl))
+            {
+                try
+                {
+                    System.Diagnostics.Process.Start(_currentTrackUrl);
+                }
+                catch (Exception)
+                {
+                }
             }
         }
     }

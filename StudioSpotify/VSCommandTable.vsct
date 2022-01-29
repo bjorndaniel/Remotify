@@ -14,7 +14,7 @@
         <Icon guid="ImageCatalogGuid" id="Play" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
-          <ButtonText>Studio Spotify</ButtonText>
+          <ButtonText>Remotify</ButtonText>
           <LocCanonicalName>.View.StudioSpotifyToolWindow</LocCanonicalName>
         </Strings>
       </Button>
@@ -22,7 +22,7 @@
         <Parent guid="guidStudioSpotifyPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="ImageCatalogGuid" id="Play" />
         <Strings>
-          <ButtonText>Studio Spotify - Revoke Spotify access</ButtonText>
+          <ButtonText>Remotify - Revoke Spotify access</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -40,12 +40,12 @@
     <GuidSymbol name="StudioSpotify" value="{51443615-a922-4a5c-8f37-7e9bb4ab44ca}">
       <IDSymbol name="StudioSpotifyCommand" value="0x0100" />
     </GuidSymbol>
-  
+
     <GuidSymbol value="{70feb9ed-ff71-4c44-9567-6523b93dccc3}" name="guidStudioSpotifyPackageCmdSet">
       <IDSymbol value="4128" name="MyMenuGroup" />
       <IDSymbol value="256" name="cmdidCommand" />
     </GuidSymbol>
-  
+
     <GuidSymbol value="{3be6a221-51ca-46a5-b524-b9707950b5c1}" name="guidImages">
       <IDSymbol name="bmpPic1" value="1" />
       <IDSymbol name="bmpPic2" value="2" />

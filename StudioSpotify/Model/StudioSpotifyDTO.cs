@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace StudioSpotify.Model
+namespace Remotify.Model
 {
     public class StudioSpotifyDTO
     {

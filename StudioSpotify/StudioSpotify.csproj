@@ -19,8 +19,8 @@
     <ProjectGuid>{A1B2404C-511B-4488-BC2E-7E3708AB67B7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StudioSpotify</RootNamespace>
-    <AssemblyName>StudioSpotify</AssemblyName>
+    <RootNamespace>Remotify</RootNamespace>
+    <AssemblyName>Remotify</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
     <UseCodebase>true</UseCodebase>
@@ -77,6 +77,9 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Resources\settings.json">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Resources\SpotifyLogo.png">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Screenshot.png">

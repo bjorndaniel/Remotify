@@ -1,10 +1,10 @@
 ﻿using Microsoft.VisualStudio.Shell.Interop;
 using Newtonsoft.Json;
-using StudioSpotify.Model;
+using Remotify.Model;
 using System.ComponentModel.Design;
 using System.IO;
 
-namespace StudioSpotify
+namespace Remotify
 {
     /// <summary>
     /// Command handler
@@ -54,7 +54,7 @@ namespace StudioSpotify
         /// <summary>
         /// Gets the service provider from the owner package.
         /// </summary>
-        private Microsoft.VisualStudio.Shell.IAsyncServiceProvider ServiceProvider
+        private IAsyncServiceProvider ServiceProvider
         {
             get
             {
@@ -95,7 +95,7 @@ namespace StudioSpotify
             options.HasRevokedAccess = true;
             await options.SaveAsync();
             File.WriteAllText(json, JsonConvert.SerializeObject(settings));
-            var title = "Studio Spotify";
+            var title = "Remotify";
 
             // Show a message box to prove we were here
             VsShellUtilities.ShowMessageBox(

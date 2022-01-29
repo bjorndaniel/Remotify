@@ -9,7 +9,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace StudioSpotify.Functions
+namespace Remotify.Functions
 {
     public static class StudioSpotifyTokens
     {

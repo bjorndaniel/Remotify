@@ -6,7 +6,7 @@ using Microsoft.VisualStudio;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace StudioSpotify
+namespace Remotify
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [InstalledProductRegistration(Vsix.Name, Vsix.Description, Vsix.Version)]

@@ -1,4 +1,4 @@
-﻿namespace StudioSpotify
+﻿namespace Remotify
 {
     [Command(PackageIds.StudioSpotifyCommand)]
     internal sealed class StudioSpotifyToolWindowCommand : BaseCommand<StudioSpotifyToolWindowCommand>
