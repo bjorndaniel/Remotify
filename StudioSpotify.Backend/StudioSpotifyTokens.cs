@@ -25,7 +25,7 @@ namespace Remotify.Functions
             {
                 var response = await new OAuthClient().RequestToken(
                     new AuthorizationCodeTokenRequest(clientId, clientSecret,
-                    data.Code, new Uri("http://localhost:5000"))
+                    data.Code, new Uri("http://localhost:5781"))
                 );
                 if (response.IsExpired)
                 {

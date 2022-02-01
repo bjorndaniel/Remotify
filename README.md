@@ -11,6 +11,9 @@ Permissions are needed to control playback and read currently playing music.
 
 ## Release Notes
 
+### 0.9.1
+Changing internal port to not clash with default developer ports
+
 ### 0.9
 Rebranding to comply with Spotify rules
 

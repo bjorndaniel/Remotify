@@ -86,7 +86,7 @@ namespace Remotify
         {
             if (!_hasCode)
             {
-                var loginRequest = new LoginRequest(new Uri("http://localhost:5000"), _settings?.ClientId ?? "", LoginRequest.ResponseType.Code)
+                var loginRequest = new LoginRequest(new Uri("http://localhost:5781"), _settings?.ClientId ?? "", LoginRequest.ResponseType.Code)
                 {
                     Scope = new[] { Scopes.PlaylistReadPrivate,
                  Scopes.Streaming,
@@ -284,7 +284,7 @@ namespace Remotify
         private async void WebBrowser_Navigating(object sender, NavigatingCancelEventArgs e)
         {
 
-            if (e.Uri.ToString().Contains("http://localhost:5000") && !_hasCode)
+            if (e.Uri.ToString().Contains("http://localhost:5781") && !_hasCode)
             {
                 PanelError.Visibility = Visibility.Collapsed;
                 var queryDictionary = HttpUtility.ParseQueryString(e.Uri.Query);
