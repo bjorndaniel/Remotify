@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace Remotify
 {
-    public class StudioSpotifyToolWindow : BaseToolWindow<StudioSpotifyToolWindow>
+    public class RemotifyToolWindow : BaseToolWindow<RemotifyToolWindow>
     {
         public override string GetTitle(int toolWindowId) => "Remotify";
 
@@ -14,7 +14,7 @@ namespace Remotify
 
         public override Task<FrameworkElement> CreateAsync(int toolWindowId, CancellationToken cancellationToken)
         {
-            return Task.FromResult<FrameworkElement>(new StudioSpotifyToolWindowControl());
+            return Task.FromResult<FrameworkElement>(new RemotifyToolWindowControl());
         }
 
         [Guid("a27f9ba1-14d4-4a04-a670-bcc815e41376")]

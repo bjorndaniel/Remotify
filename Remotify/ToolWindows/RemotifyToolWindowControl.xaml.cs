@@ -14,21 +14,21 @@ using System.Windows.Navigation;
 
 namespace Remotify
 {
-    public partial class StudioSpotifyToolWindowControl : UserControl
+    public partial class RemotifyToolWindowControl : UserControl
     {
 
         private bool _hasCode = false;
         private string _code = string.Empty;
         private SpotifyClient _spotifyClient;
         private Timer _timer;
-        private StudioSpotifySettings _settings;
+        private RemotifySettings _settings;
         private readonly HttpClient _httpClient;
         private string _placeHolder;
         private Guid _paneGuid = Guid.NewGuid();
         private IVsOutputWindow _outputWindow;
         private string _currentTrackUrl = string.Empty;
 
-        public StudioSpotifyToolWindowControl()
+        public RemotifyToolWindowControl()
         {
             InitializeComponent();
             _httpClient = new HttpClient();
@@ -37,18 +37,18 @@ namespace Remotify
         protected override async void OnInitialized(EventArgs e)
         {
             General.Saved += General_Saved;
-            var dir = Path.GetDirectoryName(typeof(StudioSpotifyPackage).Assembly.Location);
+            var dir = Path.GetDirectoryName(typeof(RemotifyPackage).Assembly.Location);
             var json = Path.Combine(dir, "Resources", "settings.json");
             if (!string.IsNullOrWhiteSpace(json))
             {
-                _settings = JsonConvert.DeserializeObject<StudioSpotifySettings>(File.ReadAllText(json));
+                _settings = JsonConvert.DeserializeObject<RemotifySettings>(File.ReadAllText(json));
                 if (!string.IsNullOrWhiteSpace(_settings?.AccessToken))
                 {
                     PanelError.Visibility = Visibility.Collapsed;
                 }
                 await ActivateSpotifyAsync();
             }
-            dir = Path.GetDirectoryName(typeof(StudioSpotifyPackage).Assembly.Location);
+            dir = Path.GetDirectoryName(typeof(RemotifyPackage).Assembly.Location);
             _placeHolder = Path.Combine(dir, "Resources", "logo.png");
             AlbumImage.Source = new BitmapImage(new Uri(_placeHolder));
             var spotifyLogo = Path.Combine(dir, "Resources", "SpotifyLogo.png");
@@ -176,18 +176,18 @@ namespace Remotify
             {
                 if (_settings != null && string.IsNullOrEmpty(_settings?.AccessToken))
                 {
-                    var dto = new StudioSpotifyDTO
+                    var dto = new RemotifyDTO
                     {
                         Code = _code,
                         Type = 0,
                     };
                     var content = new StringContent(JsonConvert.SerializeObject(dto), System.Text.Encoding.UTF8, "application/json");
-                    var result = await _httpClient.PostAsync($"{_settings!.StudioSpotifyBackend}", content);
-                    var response = JsonConvert.DeserializeObject<StudioSpotifyDTO>(await result.Content.ReadAsStringAsync());
+                    var result = await _httpClient.PostAsync($"{_settings!.RemotifyBackend}", content);
+                    var response = JsonConvert.DeserializeObject<RemotifyDTO>(await result.Content.ReadAsStringAsync());
                     _settings.AccessToken = response?.AccessToken ?? string.Empty;
                     _settings.RefreshToken = response?.RefreshToken ?? string.Empty;
                     _settings.Expires = DateTimeOffset.UtcNow.AddSeconds(response?.ExpiresIn ?? 0);
-                    var dir = Path.GetDirectoryName(typeof(StudioSpotifyPackage).Assembly.Location);
+                    var dir = Path.GetDirectoryName(typeof(RemotifyPackage).Assembly.Location);
                     var json = Path.Combine(dir, "Resources", "settings.json");
                     File.WriteAllText(json, JsonConvert.SerializeObject(_settings));
                 }
@@ -245,18 +245,18 @@ namespace Remotify
         {
             try
             {
-                var dto = new StudioSpotifyDTO
+                var dto = new RemotifyDTO
                 {
                     Type = 1,
                     AccessToken = _settings!.AccessToken,
                     RefreshToken = _settings!.RefreshToken,
                 };
                 var content = new StringContent(JsonConvert.SerializeObject(dto));
-                var result = await _httpClient.PostAsync($"{_settings!.StudioSpotifyBackend}", content);
-                var response = JsonConvert.DeserializeObject<StudioSpotifyDTO>(await result.Content.ReadAsStringAsync());
+                var result = await _httpClient.PostAsync($"{_settings!.RemotifyBackend}", content);
+                var response = JsonConvert.DeserializeObject<RemotifyDTO>(await result.Content.ReadAsStringAsync());
                 _settings.AccessToken = response?.AccessToken ?? string.Empty;
                 _settings.Expires = DateTimeOffset.UtcNow.AddSeconds(response?.ExpiresIn ?? 0);
-                var dir = Path.GetDirectoryName(typeof(StudioSpotifyPackage).Assembly.Location);
+                var dir = Path.GetDirectoryName(typeof(RemotifyPackage).Assembly.Location);
                 var json = Path.Combine(dir, "Resources", "settings.json");
                 File.WriteAllText(json, JsonConvert.SerializeObject(_settings));
                 _spotifyClient = new SpotifyClient(_settings.AccessToken);

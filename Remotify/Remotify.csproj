@@ -54,12 +54,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Command.cs" />
-    <Compile Include="Model\StudioSpotifyDTO.cs" />
-    <Compile Include="Model\StudioSpotifySettings.cs" />
+    <Compile Include="Model\RemotifyDTO.cs" />
+    <Compile Include="Model\RemotifySettings.cs" />
     <Compile Include="Options\General.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Commands\StudioSpotifyToolWindowCommand.cs" />
-    <Compile Include="StudioSpotifyPackage.cs" />
+    <Compile Include="Commands\RemotifyToolWindowCommand.cs" />
+    <Compile Include="RemotifyPackage.cs" />
     <Compile Include="source.extension.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -105,13 +105,13 @@
     </VSCTCompile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ToolWindows\StudioSpotifyToolWindow.cs" />
-    <Page Include="ToolWindows\StudioSpotifyToolWindowControl.xaml">
+    <Compile Include="ToolWindows\RemotifyToolWindow.cs" />
+    <Page Include="ToolWindows\RemotifyToolWindowControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Compile Include="ToolWindows\StudioSpotifyToolWindowControl.xaml.cs">
-      <DependentUpon>StudioSpotifyToolWindowControl.xaml</DependentUpon>
+    <Compile Include="ToolWindows\RemotifyToolWindowControl.xaml.cs">
+      <DependentUpon>RemotifyToolWindowControl.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

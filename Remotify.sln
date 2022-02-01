@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudioSpotify", "StudioSpotify\StudioSpotify.csproj", "{A1B2404C-511B-4488-BC2E-7E3708AB67B7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudioSpotify.Backend", "StudioSpotify.Backend\StudioSpotify.Backend.csproj", "{D8A8BD74-D7B3-4E82-818F-EC0DFC3B46E6}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildAndDeploy", "BuildAndDeploy", "{7F4E6FE8-8709-402A-BA82-65ABFF91483A}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		README.md = README.md
-		.github\workflows\StudioSpotify.yml = .github\workflows\StudioSpotify.yml
+		.github\workflows\Remotify.yml = .github\workflows\Remotify.yml
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Remotify.Backend", "Remotify.Backend\Remotify.Backend.csproj", "{3C6A2BDE-2FC0-47C7-8643-DFA7AACC7CB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remotify", "Remotify\Remotify.csproj", "{A1B2404C-511B-4488-BC2E-7E3708AB67B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +23,14 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C6A2BDE-2FC0-47C7-8643-DFA7AACC7CB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C6A2BDE-2FC0-47C7-8643-DFA7AACC7CB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C6A2BDE-2FC0-47C7-8643-DFA7AACC7CB3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3C6A2BDE-2FC0-47C7-8643-DFA7AACC7CB3}.Debug|x86.Build.0 = Debug|Any CPU
+		{3C6A2BDE-2FC0-47C7-8643-DFA7AACC7CB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C6A2BDE-2FC0-47C7-8643-DFA7AACC7CB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C6A2BDE-2FC0-47C7-8643-DFA7AACC7CB3}.Release|x86.ActiveCfg = Release|Any CPU
+		{3C6A2BDE-2FC0-47C7-8643-DFA7AACC7CB3}.Release|x86.Build.0 = Release|Any CPU
 		{A1B2404C-511B-4488-BC2E-7E3708AB67B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A1B2404C-511B-4488-BC2E-7E3708AB67B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1B2404C-511B-4488-BC2E-7E3708AB67B7}.Debug|x86.ActiveCfg = Debug|x86
@@ -31,14 +39,6 @@ Global
 		{A1B2404C-511B-4488-BC2E-7E3708AB67B7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A1B2404C-511B-4488-BC2E-7E3708AB67B7}.Release|x86.ActiveCfg = Release|x86
 		{A1B2404C-511B-4488-BC2E-7E3708AB67B7}.Release|x86.Build.0 = Release|x86
-		{D8A8BD74-D7B3-4E82-818F-EC0DFC3B46E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D8A8BD74-D7B3-4E82-818F-EC0DFC3B46E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D8A8BD74-D7B3-4E82-818F-EC0DFC3B46E6}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D8A8BD74-D7B3-4E82-818F-EC0DFC3B46E6}.Debug|x86.Build.0 = Debug|Any CPU
-		{D8A8BD74-D7B3-4E82-818F-EC0DFC3B46E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D8A8BD74-D7B3-4E82-818F-EC0DFC3B46E6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D8A8BD74-D7B3-4E82-818F-EC0DFC3B46E6}.Release|x86.ActiveCfg = Release|Any CPU
-		{D8A8BD74-D7B3-4E82-818F-EC0DFC3B46E6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

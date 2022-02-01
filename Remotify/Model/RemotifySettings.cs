@@ -2,7 +2,7 @@
 
 namespace Remotify.Model
 {
-    public class StudioSpotifySettings
+    public class RemotifySettings
     {
         [JsonProperty("accessToken")]
         public string AccessToken { get; set; } = string.Empty;
@@ -12,7 +12,7 @@ namespace Remotify.Model
         public string ClientId { get; set; } = string.Empty;
         [JsonProperty("expires")]
         public DateTimeOffset? Expires { get; set; }
-        [JsonProperty("studioSpotifyBackend")]
-        public string StudioSpotifyBackend { get; set; } = string.Empty;
+        [JsonProperty("remotifyBackend")]
+        public string RemotifyBackend { get; set; } = string.Empty;
     }
 }

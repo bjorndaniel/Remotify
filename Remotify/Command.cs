@@ -19,7 +19,7 @@ namespace Remotify
         /// <summary>
         /// Command menu group (command set GUID).
         /// </summary>
-        public static readonly Guid CommandSet = new Guid("70feb9ed-ff71-4c44-9567-6523b93dccc3");
+        public static readonly Guid CommandSet = new("70feb9ed-ff71-4c44-9567-6523b93dccc3");
 
         /// <summary>
         /// VS Package that provides this command, not null.
@@ -83,12 +83,13 @@ namespace Remotify
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event args.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         private async void Execute(object sender, EventArgs e)
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-            var dir = Path.GetDirectoryName(typeof(StudioSpotifyPackage).Assembly.Location);
+            var dir = Path.GetDirectoryName(typeof(RemotifyPackage).Assembly.Location);
             var json = Path.Combine(dir, "Resources", "settings.json");
-            var settings = JsonConvert.DeserializeObject<StudioSpotifySettings>(File.ReadAllText(json));
+            var settings = JsonConvert.DeserializeObject<RemotifySettings>(File.ReadAllText(json));
             settings.AccessToken = string.Empty;
             settings.RefreshToken = string.Empty;
             var options = await General.GetLiveInstanceAsync();

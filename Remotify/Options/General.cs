@@ -5,8 +5,8 @@ namespace Remotify
     internal partial class OptionsProvider
     {
         // Register the options with these attributes on your package class:
-        // [ProvideOptionPage(typeof(OptionsProvider.GeneralOptions), "StudioSpotify", "General", 0, 0, true)]
-        // [ProvideProfile(typeof(OptionsProvider.GeneralOptions), "StudioSpotify", "General", 0, 0, true)]
+        // [ProvideOptionPage(typeof(OptionsProvider.GeneralOptions), "Remotify", "General", 0, 0, true)]
+        // [ProvideProfile(typeof(OptionsProvider.GeneralOptions), "Remotify", "General", 0, 0, true)]
         public class GeneralOptions : BaseOptionPage<General> { }
     }
 

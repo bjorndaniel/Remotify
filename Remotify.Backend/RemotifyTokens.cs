@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace Remotify.Functions
 {
-    public static class StudioSpotifyTokens
+    public static class RemotifyTokens
     {
-        [FunctionName("StudioSpotifyTokens")]
+        [FunctionName("RemotifyTokens")]
         public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req, ILogger log)
         {
-            log.LogInformation("StudioSpotify token endpoint called");
-            var data = await JsonSerializer.DeserializeAsync<StudioSpotifyDTO>(req.Body);
+            log.LogInformation("Remotify token endpoint called");
+            var data = await JsonSerializer.DeserializeAsync<RemotifyDTO>(req.Body);
             log.LogInformation(JsonSerializer.Serialize(data));
             var clientId = Environment.GetEnvironmentVariable("ClientId", EnvironmentVariableTarget.Process);
             var clientSecret = Environment.GetEnvironmentVariable("ClientSecret", EnvironmentVariableTarget.Process);
@@ -32,13 +32,13 @@ namespace Remotify.Functions
                     var refreshResponse = await new OAuthClient().RequestToken(
                         new AuthorizationCodeRefreshRequest(clientId, clientSecret, data.RefreshToken)
                     );
-                    return new OkObjectResult(new StudioSpotifyDTO
+                    return new OkObjectResult(new RemotifyDTO
                     {
                         AccessToken = refreshResponse.AccessToken,
                         ExpiresIn = refreshResponse.ExpiresIn
                     });
                 }
-                return new OkObjectResult(new StudioSpotifyDTO
+                return new OkObjectResult(new RemotifyDTO
                 {
                     AccessToken = response.AccessToken,
                     RefreshToken = response.RefreshToken,
@@ -50,7 +50,7 @@ namespace Remotify.Functions
                 var response = await new OAuthClient().RequestToken(
                     new AuthorizationCodeRefreshRequest(clientId, clientSecret, data.RefreshToken)
                 );
-                return new OkObjectResult(new StudioSpotifyDTO
+                return new OkObjectResult(new RemotifyDTO
                 {
                     AccessToken = response.AccessToken,
                     ExpiresIn = response.ExpiresIn
@@ -60,7 +60,7 @@ namespace Remotify.Functions
         }
     }
 
-    public class StudioSpotifyDTO
+    public class RemotifyDTO
     {
         [JsonPropertyName("accessToken")]
         public string AccessToken { get; set; } = string.Empty;
