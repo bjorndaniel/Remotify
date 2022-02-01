@@ -5,10 +5,10 @@ on:
     - main
 env:
   AZURE_FUNCTIONAPP_NAME: Remotify
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: StudioSpotify.Backend/publish
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: Remotify.Backend/publish
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 6.0.x
-  WORKING_DIRECTORY: StudioSpotify.Backend
+  WORKING_DIRECTORY: Remotify.Backend
 jobs:
   build-and-deploy:
     runs-on: windows-latest
