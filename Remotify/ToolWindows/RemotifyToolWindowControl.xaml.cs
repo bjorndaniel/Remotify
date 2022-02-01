@@ -88,13 +88,12 @@ namespace Remotify
             {
                 var loginRequest = new LoginRequest(new Uri("http://localhost:5781"), _settings?.ClientId ?? "", LoginRequest.ResponseType.Code)
                 {
-                    Scope = new[] { Scopes.PlaylistReadPrivate,
-                 Scopes.Streaming,
-                 Scopes.UserModifyPlaybackState,
-                 Scopes.AppRemoteControl,
-                 Scopes.UserReadPlaybackState,
-                 Scopes.UserReadCurrentlyPlaying,
-                 Scopes.UserReadPlaybackPosition }
+                    Scope = new[] {
+                     Scopes.Streaming,
+                     Scopes.UserReadCurrentlyPlaying,
+                     Scopes.UserModifyPlaybackState,
+                     Scopes.UserReadPlaybackState
+                 }
                 };
                 WebBrowser.Navigate(loginRequest.ToUri());
             }
@@ -330,7 +329,10 @@ namespace Remotify
                     Track.Text = "No player active";
                 }
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                _ = "";
+            }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
